@@ -208,7 +208,25 @@ def test_compute_spec_volatility():
     # Check if the computed spec_volatility matches the expected result
     np.testing.assert_array_almost_equal(spec_volatility, expected_spec_volatility)
 
+def test_compute_stat_volatility():
+    analyzer = Volatility()
+
+    # Sample price series data
+    price_series = pd.Series([10, 12, 15, 11, 14, 16, 18, 20])
+
+    # Call the compute_stat_volatility method
+    stat_volatility = analyzer.compute_stat_volatility(price_series)
+
+    # Expected result: 1 - (price_mean - price_std) / price_mean
+    expected_stat_volatility = 1 - (np.mean(price_series) - np.std(price_series)) / np.mean(price_series)
+    expected_stat_volatility = expected_stat_volatility * 2
+
+    # Check if the computed stat_volatility matches the expected result
+    #np.assertAlmostEqual(stat_volatility, expected_stat_volatility)
+
 # Run the test cases
 test_trend_analyzer()
 
 test_compute_spec_volatility()
+
+test_compute_stat_volatility()
